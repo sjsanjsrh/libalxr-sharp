@@ -14,6 +14,8 @@ namespace LibALXR
         None = 0, // Not Support or Disabled
         [EnumMember(Value = "FB")]
         FB,
+        [EnumMember(Value = "FB_V2")]
+        FB_V2,
         [EnumMember(Value = "HTC")]
         HTC,
         [EnumMember(Value = "Pico")] // future support.
@@ -36,16 +38,32 @@ namespace LibALXR
         TypeCount
     }
 
+    public enum ALXRFaceTrackingDataSource : byte
+    {
+        [EnumMember(Value = "VisualSource")]
+        VisualSource = 0,
+        [EnumMember(Value = "AudioSource")]
+        AudioSource,
+        [EnumMember(Value = "UnknownSource")]
+        UnknownSource,
+        TypeCount
+    };
+
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct ALXRFacialEyePacket
     {
         public const int MaxEyeCount = 2;
-        public const int MaxExpressionCount = 63;
+        public const int MaxExpressionCount = 70;
 
+        [MarshalAs(UnmanagedType.U1)]
         public ALXRFacialExpressionType expressionType;
+        [MarshalAs(UnmanagedType.U1)]
         public ALXREyeTrackingType eyeTrackerType;
+        [MarshalAs(UnmanagedType.U1)]
         public byte isEyeFollowingBlendshapesValid;
         public unsafe fixed byte isEyeGazePoseValid[MaxEyeCount];
+        [MarshalAs(UnmanagedType.U1)]
+        public ALXRFaceTrackingDataSource expressionDataSource;
         public unsafe fixed float expressionWeights[MaxExpressionCount];
 
         public XrPosef eyeGazePose0;
