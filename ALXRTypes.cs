@@ -334,6 +334,11 @@ namespace LibALXR
         public bool noPassthrough;
         [MarshalAs(UnmanagedType.U1)]
         public bool noHandTracking;
+        // Enables a headless OpenXR session if supported by the runtime (same as `headlessSession`).
+        // In the absence of native support, will attempt to simulate a headless session.
+        // Caution: May not be compatible with all runtimes and could lead to unexpected behavior.
+        [MarshalAs(UnmanagedType.U1)]
+        public bool simulateHeadless;
 
 #if XR_USE_PLATFORM_ANDROID
         public IntPtr applicationVM;

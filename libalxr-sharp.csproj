@@ -5,8 +5,9 @@
     <RootNamespace>LibALXR</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>x64</Platforms>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
 </Project>

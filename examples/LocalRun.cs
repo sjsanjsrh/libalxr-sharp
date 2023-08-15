@@ -20,8 +20,13 @@ namespace LibALXR.examples
             public bool EnableHandleTracking { get; set; } = true;
 
             // If you only care about tracking data, set this true but
-            // is only enabled if a particular runtime supports `XR_MND_headless extension.
+            // is only enabled if a particular runtime supports `XR_MND_headless` extension.
             public bool HeadlessSession { get; set; } = true;
+
+            // Enables a headless OpenXR session if supported by the runtime (same as `HeadlessSession`).
+            // In the absence of native support, will attempt to simulate a headless session.
+            // Caution: May not be compatible with all runtimes and could lead to unexpected behavior.
+            public bool SimulateHeadless { get; set; } = true;
 
             public bool VerboseLogs { get; set; } = false;
         }
@@ -132,7 +137,7 @@ namespace LibALXR.examples
                 displayColorSpace = ALXRColorSpace.Default,
                 facialTracking = config.FacialTrackingExt,
                 eyeTracking = config.EyeTrackingExt,
-                trackingServerPortNo = 0, //ALXRClientConfig.DefaultPortNo,
+                trackingServerPortNo = LibALXR.TrackingServerDefaultPortNo,
                 verbose = config.VerboseLogs,
                 disableLinearizeSrgb = false,
                 noSuggestedBindings = true,
@@ -140,9 +145,10 @@ namespace LibALXR.examples
                 noFrameSkip = false,
                 disableLocalDimming = true,
                 headlessSession = config.HeadlessSession,
+                simulateHeadless = config.SimulateHeadless,
                 noFTServer = true,
                 noPassthrough = true,
-                noHandTracking = true, //!config.EnableHandleTracking, temp disabled for future OSC supprot.
+                noHandTracking = !config.EnableHandleTracking,
                 firmwareVersion = new ALXRVersion
                 {
                     // only relevant for android clients.
