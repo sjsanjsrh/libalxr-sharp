@@ -229,6 +229,12 @@ namespace LibALXR
         All = ALXRTrackingEnabledFlags.Hands | ALXRTrackingEnabledFlags.Eyes | ALXRTrackingEnabledFlags.Face
     }
 
+    public enum ALXRPassthroughMode : uint {
+        None = 0,
+        BlendLayer,
+        MaskLayer,
+    }
+
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct ALXRSystemProperties
     {
@@ -236,8 +242,11 @@ namespace LibALXR
         public string systemName;
         public float currentRefreshRate;
         public IntPtr refreshRates;
+        [MarshalAs(UnmanagedType.U4)]
         public uint refreshRatesCount;
+        [MarshalAs(UnmanagedType.U4)]
         public uint recommendedEyeWidth;
+        [MarshalAs(UnmanagedType.U4)]
         public uint recommendedEyeHeight;
         [MarshalAs(UnmanagedType.U8)]
         public ALXRTrackingEnabledFlags enabledTrackingSystemsFlags;
@@ -305,6 +314,8 @@ namespace LibALXR
         public ALXRDecoderType decoderType;
         [MarshalAs(UnmanagedType.I4)]
         public ALXRColorSpace displayColorSpace;
+        [MarshalAs(UnmanagedType.U4)]
+        public ALXRPassthroughMode passthroughMode;
 
         [MarshalAs(UnmanagedType.U1)]
         public ALXRFacialExpressionType facialTracking;
@@ -358,7 +369,9 @@ namespace LibALXR
     [StructLayout(LayoutKind.Sequential)]
     public struct ALXRRenderConfig
     {
+        [MarshalAs(UnmanagedType.U4)]
         public uint eyeWidth;
+        [MarshalAs(UnmanagedType.U4)]
         public uint eyeHeight;
         public float refreshRate;
         public float foveationCenterSizeX;
@@ -374,7 +387,9 @@ namespace LibALXR
     [StructLayout(LayoutKind.Sequential)]
     public struct ALXRDecoderConfig
     {
+        [MarshalAs(UnmanagedType.U4)]
         public ALXRCodecType codecType;
+        [MarshalAs(UnmanagedType.U4)]
         public uint cpuThreadCount; // only used for software decoding.
         [MarshalAs(UnmanagedType.U1)]
         public bool enableFEC;
@@ -385,6 +400,7 @@ namespace LibALXR
     [StructLayout(LayoutKind.Sequential)]
     public struct ALXRStreamConfig
     {
+        [MarshalAs(UnmanagedType.U4)]
         public ALXRTrackingSpace trackingSpaceType;
         public ALXRRenderConfig renderConfig;
         public ALXRDecoderConfig decoderConfig;
